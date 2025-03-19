@@ -1,0 +1,56 @@
+syntax = "proto3";
+package proto;
+option go_package = "./";
+
+
+service Auth {
+  rpc Registration (RegistrationRequest) returns (RegistrationResponse){}
+  rpc Authentication (AuthenticationRequest) returns (AuthenticationResponse){}
+  rpc Authorization (AuthorizationRequest) returns (AuthorizationResponse){}
+  rpc Logout (LogoutRequest) returns (LogoutResponse){}
+}
+
+message RegistrationRequest{
+    string name = 1;
+    string password = 2;
+    string email = 3;
+}
+
+message RegistrationResponse{
+    string message = 1;
+}
+
+//===================================
+
+message AuthenticationRequest{
+    string name = 1;
+    string password = 2;
+    string email = 3;
+}
+
+message AuthenticationResponse{
+    string message = 1;
+    string accessToken = 2;
+}
+
+//===================================
+
+message AuthorizationRequest{
+    string accessToken = 1;
+}
+
+message AuthorizationResponse{
+    string message = 1;
+}
+
+//===================================
+
+message LogoutRequest{
+    string accessToken = 1;
+}
+
+message LogoutResponse{
+    string message = 1;
+}
+
+//===================================
