@@ -18,6 +18,7 @@ message RegistrationRequest{
 
 message RegistrationResponse{
     string message = 1;
+    string error = 2;
 }
 
 //===================================
@@ -30,7 +31,8 @@ message AuthenticationRequest{
 
 message AuthenticationResponse{
     string message = 1;
-    string accessToken = 2;
+    string error = 2;
+    string accessToken = 3;
 }
 
 //===================================
@@ -41,6 +43,7 @@ message AuthorizationRequest{
 
 message AuthorizationResponse{
     string message = 1;
+    string error = 2;
 }
 
 //===================================
@@ -51,6 +54,7 @@ message LogoutRequest{
 
 message LogoutResponse{
     string message = 1;
+    string error = 2;
 }
 
 //===================================
