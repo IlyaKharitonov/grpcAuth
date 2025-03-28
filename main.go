@@ -8,5 +8,4 @@ func main() {
 	//добавить грейсфул
 
 	service.New().Run()
-
 }

@@ -9,6 +9,7 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/IlyaKharitonov/logger v0.0.0-20250327043846-359f018e3275 // indirect
 	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/ilyakaznacheev/cleanenv v1.5.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect

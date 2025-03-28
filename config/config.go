@@ -1,14 +1,10 @@
 package config
 
 import (
+	"github.com/IlyaKharitonov/logger"
 	"github.com/ilyakaznacheev/cleanenv"
 	"log"
 )
-
-//type AuthService struct {
-//	Host string
-//	Port string
-//}
 
 type DBConf struct {
 	Host string `env:"DB_HOST"`
@@ -18,46 +14,43 @@ type DBConf struct {
 	Name string `env:"DB_NAME"`
 }
 
-//type Redis struct {
-//	Host string
-//	Port string
-//}
-
 type ServerConf struct {
 	Host string `env:"SERVER_HOST"`
 	Port string `env:"SERVER_PORT"`
 }
 
-type Config struct {
+type configType struct {
 	DB     DBConf
 	Server ServerConf
+	Logger logger.LoggerConf
 }
 
-var globalConfig *Config
+//
+//func GetConfig() *Config {
+//	if globalConfig == nil {
+//		globalConfig = &Config{}
+//	}
+//
+//	return globalConfig
+//}
 
-func GetConfig() *Config {
-	if globalConfig == nil {
-		globalConfig = &Config{}
-	}
+func ParseConfig(path ...string) *configType {
+	var config = &configType{}
 
-	return globalConfig
-}
-
-func ParseConfig(path ...string) {
 	if len(path) != 0 {
 		//если передан путь к файлу, то парсим файл, если нет, то читаем переменные окружения
-		err := cleanenv.ReadConfig(path[0], GetConfig())
+		err := cleanenv.ReadConfig(path[0], config)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		return
+		return config
 	}
 
-	err := cleanenv.ReadEnv(GetConfig())
+	err := cleanenv.ReadEnv(config)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return
+	return config
 }
