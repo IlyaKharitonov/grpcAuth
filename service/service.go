@@ -10,6 +10,9 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 type service struct {
@@ -54,12 +57,20 @@ func (s *service) Run() {
 	if err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
-
-	//server.GracefulStop()
 }
 
 func (s *service) Stop() {
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit,
+		syscall.SIGTERM, /*  Согласно всякой документации именно он должен останавливать прогу, но на деле его мы не находим. Оставил его просто на всякий случай  */
+		syscall.SIGINT,  /*  Останавливает прогу когда она запущена из терминала и останавливается через CTRL+C  */
+		syscall.SIGQUIT, /*  Останавливает демона systemd  */
+	)
 
+	<-quit
+
+	s.grpcServer.GracefulStop()
+	s.logger.Info("Graceful Stop", nil)
 }
 
 func NewListener(config *config.ServerConf) net.Listener {

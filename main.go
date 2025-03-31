@@ -3,9 +3,9 @@ package main
 import "authService/service"
 
 func main() {
-	//добавить обработку паники
-	//добавить логирование
-	//добавить грейсфул
+	service := service.New()
 
-	service.New().Run()
+	go service.Run()
+
+	service.Stop()
 }
